@@ -133,7 +133,9 @@ class ExportMesh(object):
             if bpy.app.version < (4, 1, 0):
                 self.mesh.calc_normals()
             else:
-                self.mesh.calc_normals(mesh) # Just takes mesh instead
+                # Blender 4.1 removed Mesh.calc_normals(). Updating the mesh
+                # makes its automatically managed normals available on loops.
+                self.mesh.update()
 
         uv_layer = self.mesh.uv_layers.active
         vc_layer = self.mesh.vertex_colors.active if use_vtx_cols else None
